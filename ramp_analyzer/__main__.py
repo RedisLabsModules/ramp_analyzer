@@ -126,8 +126,7 @@ class RampAnalizer(cmd.Cmd):
 
     def do_rewritedeps(self, line):
         '''
-        Rewrite the dependencies section of the ramp file with the list of given dependencies.
-        If not dependencies the dependecies section will be empty.
+        Rewrite the dependencies section of the ramp.
         '''
         if self.zf is None:
             print(Colors.Bred('No file is open'))
@@ -202,6 +201,9 @@ class RampAnalizer(cmd.Cmd):
         self.prompt = Colors.Green('ramp-modifier %s > ' % self.zf.filename)
 
     def do_close(self, line):
+        '''
+        Close the current open file
+        '''
         if self.zf is None:
             print(Colors.Bred('No file is open'))
             return False
