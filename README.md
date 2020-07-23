@@ -35,7 +35,7 @@ ramp-Analizer > help dumpjson
         
 ramp-Analizer > help exit
 
-		exit the application. Shorthand: x q Ctrl-D.
+        exit the application. Shorthand: x q Ctrl-D.
         
 ramp-Analizer > help rewritedeps
 
