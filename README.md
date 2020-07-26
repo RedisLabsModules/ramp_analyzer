@@ -23,7 +23,7 @@ ramp-Analizer > help close
         
 ramp-Analizer > help dumpdeps
 
-        Dump the dependencies and optional-dependencies section in the ramp file
+        Dump the dependencies and supported-dependencies section in the ramp file
         
 ramp-Analizer > help dumpfiles
 

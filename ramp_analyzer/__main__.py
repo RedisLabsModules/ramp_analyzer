@@ -6,6 +6,9 @@ import StringIO
 import sys
 import inquirer
 
+DEPS_KEY = 'dependencies'
+SUPPORTED_DEPS_KEY = 'supported-dependencies'
+
 class Colors(object):
     @staticmethod
     def Cyan(data):
@@ -116,12 +119,12 @@ class RampAnalizer(cmd.Cmd):
             print(Colors.Bred('No file is open'))
             return False
 
-        print(Colors.Bold('dependencies:'))
-        deps = self.jsonObj['dependencies']
+        print(Colors.Bold('%s:' % DEPS_KEY))
+        deps = self.jsonObj[DEPS_KEY]
         print(Colors.Cyan(json.dumps(deps, indent=2)))
         print('')
-        print(Colors.Bold('optional-dependencies:'))
-        deps = self.jsonObj['optional-dependencies']
+        print(Colors.Bold('%s:' % SUPPORTED_DEPS_KEY))
+        deps = self.jsonObj[SUPPORTED_DEPS_KEY]
         print(Colors.Cyan(json.dumps(deps, indent=2)))
 
     def do_rewritedeps(self, line):
@@ -132,8 +135,8 @@ class RampAnalizer(cmd.Cmd):
             print(Colors.Bred('No file is open'))
             return False
 
-        currSelected = set(self.jsonObj['dependencies'].keys())
-        depsList = set(self.jsonObj['dependencies'].keys() + self.jsonObj['optional-dependencies'].keys())
+        currSelected = set(self.jsonObj[DEPS_KEY].keys())
+        depsList = set(self.jsonObj[DEPS_KEY].keys() + self.jsonObj[SUPPORTED_DEPS_KEY].keys())
 
         questions = [inquirer.Checkbox(
                         'deps',
@@ -146,8 +149,8 @@ class RampAnalizer(cmd.Cmd):
 
         deps = answers['deps']
         newDeps = {}
-        currDeps = self.jsonObj['dependencies']
-        currOptionalDeps = self.jsonObj['optional-dependencies']
+        currDeps = self.jsonObj[DEPS_KEY]
+        currOptionalDeps = self.jsonObj[SUPPORTED_DEPS_KEY]
         for dep in deps:
             if dep in currDeps.keys():
                 newDeps[dep] = currDeps[dep]
@@ -157,7 +160,7 @@ class RampAnalizer(cmd.Cmd):
                 continue
             print(Colors.Bred('Dependency %s not found' % dep))
             return False
-        self.jsonObj['dependencies'] = newDeps
+        self.jsonObj[DEPS_KEY] = newDeps
         print(Colors.Green('Dependencies changed'))
 
         questions = [
